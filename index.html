@@ -20,27 +20,22 @@
     z-index: 0;
   }
 
-  /* Horizontal panels */
+  /* Swipe container */
   .container {
     display: flex;
     width: 300vw; /* 3 panels */
     height: 100vh;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    overflow: hidden; /* hide scrollbars */
     z-index: 1;
     position: relative;
+    touch-action: pan-y;
+    cursor: grab;
+    transition: transform 0.4s ease;
   }
-
-  .container::-webkit-scrollbar { display: none; }
 
   .panel {
     flex: 0 0 100vw;
     height: 100vh;
-    scroll-snap-align: start;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,6 +48,7 @@
     border-right: 2px solid #0f0;
     text-align: center;
     color: #0f0;
+    scroll-snap-align: start;
   }
 
   h1, h2 {
@@ -121,20 +117,61 @@
 </div>
 
 <script>
-  // Navigation dots
+  // Swipe functionality
   const container = document.getElementById('container');
-  const dots = document.querySelectorAll('.dot');
+  let currentIndex = 0;
+  let startX = 0;
+  let isDragging = false;
+  let translateX = 0;
 
-  container.addEventListener('scroll', () => {
-    const index = Math.round(container.scrollLeft / window.innerWidth);
-    dots.forEach(dot => dot.classList.remove('active'));
-    dots[index].classList.add('active');
+  container.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startX = e.clientX;
+    container.style.cursor = 'grabbing';
   });
+  container.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    startX = e.touches[0].clientX;
+  });
+
+  const dragEnd = (endX) => {
+    isDragging = false;
+    container.style.cursor = 'grab';
+    const diff = startX - endX;
+    if (diff > 50 && currentIndex < 2) currentIndex++; // swipe left
+    if (diff < -50 && currentIndex > 0) currentIndex--; // swipe right
+    container.style.transform = `translateX(-${currentIndex * window.innerWidth}px)`;
+    updateDots();
+  };
+
+  container.addEventListener('mouseup', e => dragEnd(e.clientX));
+  container.addEventListener('mouseleave', e => isDragging && dragEnd(e.clientX));
+  container.addEventListener('touchend', e => dragEnd(e.changedTouches[0].clientX));
+
+  container.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    const moveX = e.clientX - startX;
+    container.style.transform = `translateX(${-currentIndex * window.innerWidth + -moveX}px)`;
+  });
+
+  container.addEventListener('touchmove', e => {
+    if (!isDragging) return;
+    const moveX = e.touches[0].clientX - startX;
+    container.style.transform = `translateX(${-currentIndex * window.innerWidth + -moveX}px)`;
+  });
+
+  // Navigation dots
+  const dots = document.querySelectorAll('.dot');
+  const updateDots = () => {
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[currentIndex].classList.add('active');
+  };
 
   dots.forEach(dot => {
     dot.addEventListener('click', () => {
-      const index = dot.getAttribute('data-index');
-      container.scrollTo({ left: index * window.innerWidth, behavior: 'smooth' });
+      currentIndex = dot.getAttribute('data-index');
+      container.style.transform = `translateX(-${currentIndex * window.innerWidth}px)`;
+      updateDots();
     });
   });
 
@@ -164,7 +201,7 @@
   }
 
   setInterval(draw, 35);
-  window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+  window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; container.style.transform = `translateX(-${currentIndex * window.innerWidth}px)`; });
 </script>
 
 </body>
