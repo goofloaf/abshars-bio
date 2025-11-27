@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goofy Lufy – Cyber Sorcerer</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: #0a0a0a;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* Smooth animations */
+    * {
+      transition: 0.4s ease;
+    }
+
+    header {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: linear-gradient(135deg, #0d0d0d, #111, #000);
+      background-size: 300% 300%;
+      animation: bgShift 10s infinite alternate;
+      text-align: center;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-shadow: 0 0 20px #0af;
+      animation: fadeDown 1.2s ease;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tagline {
+      font-size: 1.6rem;
+      margin-top: -10px;
+      opacity: 0.7;
+      animation: fadeUp 1.6s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    section {
+      padding: 80px 10%;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      margin: 30px 0;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 30px rgba(0, 200, 255, 0.2);
+      transform: translateY(50px);
+      opacity: 0;
+      animation: slideUp 1s forwards;
+    }
+
+    @keyframes slideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 40px rgba(0, 200, 255, 0.4);
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #999;
+      font-size: 0.9rem;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Goofy Lufy</h1>
+    <p class="tagline">Cyber Sorcerer • Ethical Hacker • Full‑Stack Crafter</p>
+  </header>
+
+  <section>
+    <div class="card">
+      <h2>💻 Who Am I?</h2>
+      <p>
+        I am Goofy Lufy, a self‑taught ethical hacker and coding wizard who began exploring
+        networks before I even knew how to spell "algorithm". From breaking my own Wi‑Fi at age 12
+        just to see if I could fix it again, to building sleek digital experiences, I do it all with style.
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>⚡ My Skills</h2>
+      <ul>
+        <li>Advanced Ethical Hacking (Network Analysis, Vulnerability Detection)</li>
+        <li>Full‑Stack Web Development (HTML, CSS, JS, React, Node)</li>
+        <li>Python Automation + Script Crafting</li>
+        <li>Penetration Testing & Security Auditing</li>
+        <li>Reverse Engineering (Beginner Level but learning fast)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>🎯 My Mission</h2>
+      <p>
+        To blend creativity with cybersecurity — building systems that look beautiful, work flawlessly,
+        and stay unbreakable. I believe hacking isn't about destruction… it's about understanding.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Goofy Lufy — Crafted with Code & Chaos
+  </footer>
+</body>
+</html>
