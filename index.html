@@ -3,123 +3,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Abshar Athulam Punathil – Cowboy Hacker Bio</title>
+<title>Abshar Athulam Punathil – Hacker Portfolio</title>
+<link rel="icon" href="favicon.png" type="image/png">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
-html, body {
-  margin:0; padding:0; height:100%; overflow:hidden;
-  font-family: 'Playfair Display', serif; background:#3b2f2f; color:#2f4f4f;
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Share Tech Mono', monospace;
+  background:black;
+  color:#0f0;
+  overflow-x:hidden;
 }
 
-/* Swipe container */
-.container {
-  display:flex; height:100vh; width:300vw; overflow:hidden;
-  z-index:1; position:relative; cursor:grab; transition: transform 0.5s ease;
+canvas#codeRain {
+  position:fixed; top:0; left:0; width:100%; height:100%; z-index:0;
 }
 
-/* Panels */
-.panel {
-  flex:0 0 100vw; height:100vh; display:flex; flex-direction:column;
-  justify-content:center; align-items:center; text-align:center;
-  padding:50px; box-sizing:border-box;
-  background: linear-gradient(to bottom, #e6d8b8, #c0a060); /* parchment gradient */
-  border: 4px solid #6b4c2b; border-radius: 12px;
-  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+nav {
+  position:fixed; top:10px; right:20px; z-index:3; display:flex; gap:20px;
 }
 
-/* Name styling - gold outline */
+nav button {
+  background:none; border:2px solid #0f0; padding:10px 15px; color:#0f0; cursor:pointer;
+  font-family:inherit; font-size:1rem; text-transform:uppercase; transition:0.3s;
+  border-radius:5px; box-shadow:0 0 10px #0f0;
+}
+
+nav button:hover {
+  background:#0f0; color:black; transform:scale(1.1); box-shadow:0 0 20px #0f0;
+}
+
+section {
+  min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center;
+  text-align:center; padding:50px; z-index:1; position:relative;
+  transition:all 1s ease; opacity:0; transform:translateY(50px);
+}
+
+section.visible { opacity:1; transform:translateY(0); }
+
 h1 {
-  font-size:3rem; color:#4b3c2f;
-  text-shadow:
-    1px 1px 2px #8b6b4c,
-    0 0 5px #d4af37,
-    0 0 10px #d4af37;
+  font-size:3rem; color:#0f0; text-shadow:0 0 5px #0f0, 0 0 10px #0f0, 0 0 20px #0f0;
   margin-bottom:20px;
 }
 
-h2 { font-size:2rem; margin-bottom:20px; color:#4b3c2f; }
+h2 { font-size:2rem; margin-bottom:20px; color:#0f0; }
 
-/* Paragraphs and list */
-p, ul { font-size:1.2rem; line-height:1.6; max-width:600px; text-align:center; color:#2f3e2f; }
-ul { list-style:none; padding:0; }
-ul li { margin:10px 0; }
+p, ul { font-size:1.2rem; max-width:700px; margin:10px 0; line-height:1.5; }
+ul { list-style:none; }
+ul li { margin:8px 0; transition:0.3s; cursor:pointer; }
+ul li:hover { color:#00ff99; transform:scale(1.05); }
 
-/* Contact links */
-.contact-links { display:flex; justify-content:center; align-items:center; gap:40px; margin-top:20px; }
-.contact-links a { display:flex; align-items:center; gap:10px; color:#4b5320; font-size:1.5rem; text-decoration:none; transition:transform 0.3s ease; }
-.contact-links a:hover { transform:scale(1.2); }
-.contact-links svg { width:30px; height:30px; fill:#4b5320; }
-
-/* Navigation dots */
-.nav-dots {
-  position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-  display:flex; gap:15px; z-index:2;
+.contact-links {
+  display:flex; justify-content:center; align-items:center; gap:40px; margin-top:20px;
 }
-.dot { width:12px; height:12px; border-radius:50%; background:#6b4c2b; opacity:0.4; transition:0.3s; cursor:pointer; }
-.dot.active { opacity:1; box-shadow:0 0 10px #6b4c2b; }
+
+.contact-links a {
+  display:flex; align-items:center; gap:10px; color:#0f0; text-decoration:none;
+  transition:0.3s; font-size:1.5rem; text-shadow:0 0 5px #0f0,0 0 10px #0f0;
+}
+.contact-links a:hover { transform:scale(1.2); color:#00ff99; text-shadow:0 0 10px #00ff99,0 0 20px #00ff99; }
+.contact-links svg { width:30px; height:30px; fill:#0f0; }
+
+#muteButton {
+  position:fixed; top:10px; left:20px; z-index:3; background:none; border:2px solid #0f0; padding:10px 15px;
+  color:#0f0; cursor:pointer; font-family:inherit; font-size:1rem; border-radius:5px; box-shadow:0 0 10px #0f0;
+  transition:0.3s;
+}
+#muteButton:hover { background:#0f0; color:black; transform:scale(1.1); box-shadow:0 0 20px #0f0; }
+
 </style>
 </head>
 <body>
 
-<div class="container" id="container">
-  <!-- Panel 1: Bio -->
-  <div class="panel">
-    <h1>Abshar Athulam Punathil</h1>
-    <h2>Who Am I?</h2>
-    <p>A self-taught ethical hacker and code wrangler of the digital frontier. I roam networks like a cowboy across the wild web, crafting clever solutions and taming rogue code with style and precision.</p>
-  </div>
+<canvas id="codeRain"></canvas>
 
-  <!-- Panel 2: Skills & Mission -->
-  <div class="panel">
-    <h2>My Skills</h2>
-    <ul>
-      <li>Advanced Ethical Hacking</li>
-      <li>Full-Stack Web Development</li>
-      <li>Python Automation</li>
-      <li>Penetration Testing</li>
-      <li>Reverse Engineering</li>
-    </ul>
-    <h2>My Mission</h2>
-    <p>To blend craftsmanship with cybersecurity — creating systems that work flawlessly while maintaining a rugged, classic style, like a true cowboy hacker of the old digital west.</p>
-  </div>
+<!-- Navigation Buttons -->
+<nav>
+  <button onclick="scrollToSection('bio')">Bio</button>
+  <button onclick="scrollToSection('skills')">Skills</button>
+  <button onclick="scrollToSection('mission')">Mission</button>
+  <button onclick="scrollToSection('contact')">Contact</button>
+</nav>
 
-  <!-- Panel 3: Contact -->
-  <div class="panel">
-    <h2>Contact Me</h2>
-    <p>Reach out via Instagram or WhatsApp:</p>
-    <div class="contact-links">
-      <a href="https://www.instagram.com/_aabshrr" target="_blank">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224,202.66A53.34,53.34,0,1,0,277.34,256,53.38,53.38,0,0,0,224,202.66Zm124.71-41a54.65,54.65,0,0,0-30.82-30.81C284.23,122.16,224,120,224,120s-60.23,2.16-93.89,10.84a54.65,54.65,0,0,0-30.82,30.81C84.16,155.77,82,216,82,216s2.16,60.23,10.84,93.89a54.65,54.65,0,0,0,30.82,30.82C163.77,389.84,224,392,224,392s60.23-2.16,93.89-10.84a54.65,54.65,0,0,0,30.82-30.82C363.84,276.23,366,216,366,216S363.84,155.77,348.71,161.66ZM224,338a82,82,0,1,1,82-82A82.1,82.1,0,0,1,224,338Zm85.33-148.67a19.2,19.2,0,1,1,19.2-19.2A19.2,19.2,0,0,1,309.33,189.33Z"/></svg>
-        _aabshrr
-      </a>
-      <a href="https://wa.me/79645909" target="_blank">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9,97.1C339-9.8,255.2-23.8,189.5,12.2,122.3,49.3,90.7,125,104,202.3L92,304l101.9-12.5c77.2,13.3,153-18.3,190-85.5,36-66.7,22-150.5-71.1-190.9ZM224,384c-44.2,0-80-35.8-80-80s35.8-80,80-80,80,35.8,80,80S268.2,384,224,384Z"/></svg>
-        79645909
-      </a>
-    </div>
-  </div>
-</div>
+<!-- Mute/Unmute Button -->
+<button id="muteButton">Mute</button>
 
-<div class="nav-dots">
-  <div class="dot active" data-index="0"></div>
-  <div class="dot" data-index="1"></div>
-  <div class="dot" data-index="2"></div>
-</div>
+<!-- Background Music -->
+<audio id="bgMusic" autoplay loop>
+  <source src="cyberpunk_ambient.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Sections -->
+<section id="bio">
+  <h1>Abshar Athulam Punathil</h1>
+  <h2>Who Am I?</h2>
+  <p>I am a self-taught ethical hacker and coding wizard. I roam networks like a digital cowboy, crafting sleek and secure systems with style and precision.</p>
+</section>
+
+<section id="skills">
+  <h2>My Skills</h2>
+  <ul>
+    <li title="I can hack vending machines… maybe 😉">Advanced Ethical Hacking</li>
+    <li title="I build websites that are both flashy and functional">Full-Stack Web Development</li>
+    <li title="Python automation wizardry">Python Automation</li>
+    <li title="Testing security like a pro">Penetration Testing</li>
+    <li title="Reverse engineer anything digital">Reverse Engineering</li>
+  </ul>
+</section>
+
+<section id="mission">
+  <h2>My Mission</h2>
+  <p>To combine creativity with cybersecurity — building systems that look futuristic, work flawlessly, and remain unbreakable in the wild digital frontier.</p>
+</section>
+
+<section id="contact">
+  <h2>Contact Me</h2>
+  <p>You can reach me via Instagram or WhatsApp:</p>
+  <div class="contact-links">
+    <a href="https://www.instagram.com/_aabshrr" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224,202.66A53.34,53.34,0,1,0,277.34,256,53.38,53.38,0,0,0,224,202.66Zm124.71-41a54.65,54.65,0,0,0-30.82-30.81C284.23,122.16,224,120,224,120s-60.23,2.16-93.89,10.84a54.65,54.65,0,0,0-30.82,30.81C84.16,155.77,82,216,82,216s2.16,60.23,10.84,93.89a54.65,54.65,0,0,0,30.82,30.82C163.77,389.84,224,392,224,392s60.23-2.16,93.89-10.84a54.65,54.65,0,0,0,30.82-30.82C363.84,276.23,366,216,366,216S363.84,155.77,348.71,161.66ZM224,338a82,82,0,1,1,82-82A82.1,82.1,0,0,1,224,338Zm85.33-148.67a19.2,19.2,0,1,1,19.2-19.2A19.2,19.2,0,0,1,309.33,189.33Z"/></svg>
+      _aabshrr
+    </a>
+    <a href="https://wa.me/79645909" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9,97.1C339-9.8,255.2-23.8,189.5,12.2,122.3,49.3,90.7,125,104,202.3L92,304l101.9-12.5c77.2,13.3,153-18.3,190-85.5,36-66.7,22-150.5-71.1-190.9ZM224,384c-44.2,0-80-35.8-80-80s35.8-80,80-80,80,35.8,80,80S268.2,384,224,384Z"/></svg>
+      79645909
+    </a>
+  </div>
+</section>
 
 <script>
-const container=document.getElementById('container'); const dots=document.querySelectorAll('.dot'); let currentIndex=0,startX=0,isDragging=false;
-const updateDots=()=>{dots.forEach(dot=>dot.classList.remove('active'));dots[currentIndex].classList.add('active');};
-const dragEnd=(endX)=>{isDragging=false;container.style.cursor='grab'; const diff=startX-endX;
-if(diff>50&&currentIndex<2)currentIndex++; if(diff<-50&&currentIndex>0)currentIndex--; container.style.transform=`translateX(-${currentIndex*window.innerWidth}px)`; updateDots();}
-container.addEventListener('mousedown',e=>{isDragging=true;startX=e.clientX;container.style.cursor='grabbing';});
-container.addEventListener('touchstart',e=>{isDragging=true;startX=e.touches[0].clientX;});
-container.addEventListener('mouseup',e=>dragEnd(e.clientX));
-container.addEventListener('mouseleave',e=>isDragging&&dragEnd(e.clientX));
-container.addEventListener('touchend',e=>dragEnd(e.changedTouches[0].clientX));
-container.addEventListener('mousemove',e=>{if(!isDragging)return; const moveX=e.clientX-startX; container.style.transform=`translateX(${-currentIndex*window.innerWidth - moveX}px)`;});
-container.addEventListener('touchmove',e=>{if(!isDragging)return; const moveX=e.touches[0].clientX-startX; container.style.transform=`translateX(${-currentIndex*window.innerWidth - moveX}px)`;});
-dots.forEach(dot=>dot.addEventListener('click',()=>{currentIndex=dot.getAttribute('data-index'); container.style.transform=`translateX(-${currentIndex*window.innerWidth}px)`; updateDots();}));
+// Scroll reveal animation
+const sections = document.querySelectorAll('section');
+const revealSections = () => {
+  const triggerBottom = window.innerHeight * 0.85;
+  sections.forEach(section => {
+    const sectionTop = section.getBoundingClientRect().top;
+    if (sectionTop < triggerBottom) section.classList.add('visible');
+  });
+};
+window.addEventListener('scroll', revealSections);
+revealSections();
+
+// Navigation buttons scroll
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// Matrix code rain
+const canvas = document.getElementById('codeRain');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%';
+const fontSize = 16;
+const columns = canvas.width / fontSize;
+const drops = Array.from({length: columns}, () => Math.random() * canvas.height);
+function draw() {
+  ctx.fillStyle = 'rgba(0,0,0,0.05)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = '#0f0';
+  ctx.font = fontSize + 'px monospace';
+  for(let i=0;i<drops.length;i++){
+    const text = letters[Math.floor(Math.random()*letters.length)];
+    ctx.fillText(text,i*fontSize,drops[i]);
+    drops[i]+=fontSize;
+    if(drops[i]>canvas.height && Math.random()>0.975) drops[i]=0;
+  }
+}
+setInterval(draw,35);
+window.addEventListener('resize',()=>{canvas.width=window.innerWidth; canvas.height=window.innerHeight;});
+
+// Background music mute toggle
+const music = document.getElementById('bgMusic');
+const muteBtn = document.getElementById('muteButton');
+muteBtn.addEventListener('click', () => {
+  music.muted = !music.muted;
+  muteBtn.textContent = music.muted ? 'Unmute' : 'Mute';
+});
 </script>
+
 </body>
 </html>
