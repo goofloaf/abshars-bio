@@ -70,6 +70,36 @@
   /* Section scroll animation */
   section { opacity: 0; transform: translateY(50px); transition: 1s ease; }
   section.visible { opacity: 1; transform: translateY(0); }
+
+  /* Contact icons styling */
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 20px;
+  }
+
+  .contact-links a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #00cc44; /* subtle green neon */
+    font-size: 1.5rem;
+    text-decoration: none;
+    text-shadow: 0 0 5px #00cc44, 0 0 10px #00cc44;
+    transition: transform 0.3s ease;
+  }
+
+  .contact-links a:hover {
+    transform: scale(1.2);
+  }
+
+  .contact-links svg {
+    width: 30px;
+    height: 30px;
+    fill: #00cc44;
+  }
 </style>
 </head>
 <body>
@@ -97,6 +127,23 @@
   <section id="mission">
     <h2>My Mission</h2>
     <p>To blend creativity with cybersecurity — building systems that look beautiful, work flawlessly, and stay unbreakable.</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <p>You can reach me through Instagram or WhatsApp:</p>
+    <div class="contact-links">
+      <a href="https://www.instagram.com/_aabshrr" target="_blank">
+        <!-- Instagram Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224,202.66A53.34,53.34,0,1,0,277.34,256,53.38,53.38,0,0,0,224,202.66Zm124.71-41a54.65,54.65,0,0,0-30.82-30.81C284.23,122.16,224,120,224,120s-60.23,2.16-93.89,10.84a54.65,54.65,0,0,0-30.82,30.81C84.16,155.77,82,216,82,216s2.16,60.23,10.84,93.89a54.65,54.65,0,0,0,30.82,30.82C163.77,389.84,224,392,224,392s60.23-2.16,93.89-10.84a54.65,54.65,0,0,0,30.82-30.82C363.84,276.23,366,216,366,216S363.84,155.77,348.71,161.66ZM224,338a82,82,0,1,1,82-82A82.1,82.1,0,0,1,224,338Zm85.33-148.67a19.2,19.2,0,1,1,19.2-19.2A19.2,19.2,0,0,1,309.33,189.33Z"/></svg>
+        _aabshrr
+      </a>
+      <a href="https://wa.me/79645909" target="_blank">
+        <!-- WhatsApp Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9,97.1C339-9.8,255.2-23.8,189.5,12.2,122.3,49.3,90.7,125,104,202.3L92,304l101.9-12.5c77.2,13.3,153-18.3,190-85.5,36-66.7,22-150.5-71.1-190.9ZM224,384c-44.2,0-80-35.8-80-80s35.8-80,80-80,80,35.8,80,80S268.2,384,224,384Z"/></svg>
+        79645909
+      </a>
+    </div>
   </section>
 </div>
 
